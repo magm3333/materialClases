@@ -1,0 +1,1 @@
+angular.module('Compras',['ui.grid.edit','ui.grid', 'ui.grid.selection','ngTouch','ngTagsInput']);

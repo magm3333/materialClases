@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%-5level: %d{HH:mm:ss.SSS} %logger{36} - %msg%n" />
+		</Console>
+		<RollingFile name="ArchivoDiario" fileName="magm.log"
+			filePattern="magm-%d{MM-dd-yyyy}-%i.log">
+			<PatternLayout>
+				<Pattern>%-5level: %d{HH:mm:ss.SSS} %logger{36} - %msg%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="2000" />
+		</RollingFile>
+	</appenders>
+	<loggers>
+		<root level="trace">
+			<appender-ref ref="Console" />
+			<appender-ref ref="ArchivoDiario" />
+		</root>
+		<logger name="org.springframework" level="DEBUG" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="ArchivoDiario" />
+		</logger>
+
+	</loggers>
+</configuration>

@@ -1,0 +1,49 @@
+<div class="container">
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Options</h3>
+		</div>
+		<div class="panel-body">
+
+			<button type="button" class="btn btn-info" ng-click="relocate('/')">
+				<span class="glyphicon glyphicon-backward" aria-label="Right Align"></span>
+				Volver
+			</button>
+
+			<label style="margin-left: 10px;" for="findPart">Buscar: </label> <input
+				id="findPart" ng-change="reFill()" type="text" ng-model="findPart" />
+
+			<br />
+			<hr />
+			<form class="form">
+				<div class="form-group">
+					<label for="description">Description:</label><input id="description" type="text" ng-model="newProduct.description" />
+					
+					<label for="tags">Tags:</label>
+					<tags-input id="tags" ng-model="newProduct.tags" 
+						add-on-paste="true" placeholder="tag" min-length="3" max-length="50" add-on-space="true" add-on-comma="true"> 
+						<auto-complete	select-first-match="true" min-length="2" source="filterTags($query)"></auto-complete> 
+					</tags-input>
+						
+					<button style="margin-left: 10px;" type="button"
+						class="btn btn-primary" ng-click="save()">
+						<span class="glyphicon glyphicon-filter" aria-label="Right Align"></span>
+						Agregar
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<h2 style="text-align: center;" title="Click para ver el filtro">{{title}}</h2>
+	<br />
+
+	<button type="button" ng-show="selectedItem" class="btn btn-primary"
+		ng-click="remove()">
+		<span class="glyphicon glyphicon-remove" aria-label="Right Align"></span>
+		Eliminar
+	</button>
+	<div id="data">
+		<div ui-grid="gridOptions" ui-grid-edit ui-grid-selection class="grid"></div>
+	</div>
+</div>

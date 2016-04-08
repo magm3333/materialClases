@@ -1,0 +1,96 @@
+// Inicio
+
+mvn archetype:generate -DarchetypeCatalog=http://repo.maven.apache.org/maven2 -DgroupId=com.magm.core -DartifactId=Core -DarchetypeGroupId=pl.org.miki -DarchetypeArtifactId=java8-quickstart-archetype -DarchetypeVersion=RELEASE -DinteractiveMode=false
+
+mvn archetype:generate -DarchetypeCatalog=http://repo.maven.apache.org/maven2 -DgroupId=com.magm.compras -DartifactId=Compras -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=pom-root -DarchetypeVersion=RELEASE -DinteractiveMode=false
+
+
+mvn archetype:generate -DarchetypeCatalog=http://repo.maven.apache.org/maven2 -DgroupId=com.magm.compras.model -DartifactId=ComprasModel -DarchetypeGroupId=pl.org.miki -DarchetypeArtifactId=java8-quickstart-archetype -DarchetypeVersion=RELEASE -DinteractiveMode=false
+
+
+mvn archetype:generate -DarchetypeCatalog=http://repo.maven.apache.org/maven2 -DgroupId=com.magm.compras.persistence -DartifactId=ComprasPersistence -DarchetypeGroupId=pl.org.miki -DarchetypeArtifactId=java8-quickstart-archetype -DarchetypeVersion=RELEASE -DinteractiveMode=false
+
+
+mvn archetype:generate -DarchetypeCatalog=http://repo.maven.apache.org/maven2 -DgroupId=com.magm.compras.business -DartifactId=ComprasBusiness -DarchetypeGroupId=pl.org.miki -DarchetypeArtifactId=java8-quickstart-archetype -DarchetypeVersion=RELEASE -DinteractiveMode=false
+
+
+mvn archetype:generate -DarchetypeCatalog=http://repo.maven.apache.org/maven2 -DgroupId=com.magm.web -DartifactId=Web -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=webapp-javaee7 -DarchetypeVersion=RELEASE -DinteractiveMode=false
+
+
+// POM de Módulo Compras (link a los SubMódulos)
+
+<modules>
+	<module>../ComprasModel</module>
+	<module>../ComprasPersistence</module>
+	<module>../ComprasBusiness</module>
+ </modules>
+
+
+// POM de cada SubMódulo Compras (link al Módulo maestro)
+
+<parent>
+    <groupId>com.magm.compras</groupId>
+    <artifactId>Compras</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../Compras/pom.xml</relativePath>
+</parent>
+
+
+//  POM SubMódulo Persistencia (interdependencias de SubMódulos)
+
+<dependency>
+	<groupId>com.magm.compras.model</groupId>
+	<artifactId>ComprasModel</artifactId>
+	<version>${project.version}</version>
+	<scope>provided</scope>
+</dependency>
+
+
+//  POM SubMódulo Business (interdependencias de SubMódulos)
+
+<dependency>
+	<groupId>com.magm.compras.model</groupId>
+	<artifactId>ComprasModel</artifactId>
+	<version>${project.version}</version>
+	<scope>provided</scope>
+</dependency>
+<dependency>
+	<groupId>com.magm.compras.persistence</groupId>
+	<artifactId>ComprasPersistence</artifactId>
+	<version>${project.version}</version>
+	<scope>provided</scope>
+</dependency>
+
+
+//  POM Web (dependencias a los módulos)
+
+<dependency>
+    <groupId>com.magm.compras.core</groupId>
+    <artifactId>Core</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+    <groupId>com.magm.compras.model</groupId>
+    <artifactId>ComprasModel</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+    <groupId>com.magm.compras.persistence</groupId>
+    <artifactId>ComprasPersistence</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+    <groupId>com.magm.compras.business</groupId>
+    <artifactId>ComprasBusiness</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+
+
+// Para probar en Core y Compras:
+mvn clean install
+
+// Para probar en Web:
+mvn clean package
+
+//Metadata eclipse en Core, Cmpras y Web
+mvn eclipse:eclipse

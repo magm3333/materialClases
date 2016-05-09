@@ -1,0 +1,177 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Profit Foster/Módulo de Compras/Productos
+  description: Servicios relacionados con los productos
+  termsOfService: http://www.reedcons.com/terms/
+  contact:
+    name: Magm
+    email: contact@reedcons.com
+    url: http://www.reedcons.com
+  license:
+    name: Comercial
+    url: http://www.reedcons.com/license
+host: localhost:8080
+basePath: /ProfitFosterWeb/api/product
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /:
+    post:
+      description: Agrega un nuevo producto
+      operationId: save
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: product
+          description: Producto a agregar, sin valor para id
+          required: true
+          schema:
+            $ref: '#/definitions/product'
+      responses:
+        '200':
+          description: producto con id asignado
+          schema:
+            $ref: '#/definitions/product'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    put:
+      description: Modifica nuevo producto
+      operationId: update
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: product
+          description: Producto a modificar, se utilizará el id para buscar el producto
+          required: true
+          schema:
+            $ref: '#/definitions/product'
+      responses:
+        '200':
+          description: producto
+          schema:
+            $ref: '#/definitions/product'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /{id}:
+    delete:
+      description: Elimina eun producto por su ID
+      operationId: deleteProduct
+      parameters:
+        - name: id
+          in: path
+          description: ID del producto a eliminar
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: producto eliminado
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    get:
+      description: Retorna el producto cuyo ID se indica en el Path si el usuario tiene acceso al mismo.
+      operationId: load
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID del producto a cargar
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: producto
+          schema:
+            $ref: '#/definitions/product'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /list:
+    get:
+      description: Retorna la lista productos a la que el usuario tiene acceso
+      operationId: list
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: productos
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/product'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /list/filter:
+    get:
+      description: Retorna la lista productos que contengan la cadena enviada como argumento, a la que el usuario tiene acceso 
+      operationId: listFilter
+      produces:
+        - application/json
+      parameters:
+        - name: q
+          in: query
+          description: Cadena que se buscará
+          required: true
+          type: string
+      responses:
+        '200':
+          description: productos
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/product'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+definitions:
+  product:
+    type: object
+    required:
+      - id
+      - description
+      - tags
+    properties:
+      id:
+        type: integer
+        format: int64
+      description:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
+

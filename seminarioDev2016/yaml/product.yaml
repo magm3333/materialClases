@@ -1,18 +1,18 @@
 swagger: '2.0'
 info:
   version: '1.0.0'
-  title: Profit Foster/Módulo de Compras/Productos
+  title: Aplicación/Módulo de Compras/Productos
   description: Servicios relacionados con los productos
-  termsOfService: http://www.reedcons.com/terms/
+  termsOfService: http://www.magm.com.ar/terms/
   contact:
     name: Magm
-    email: contact@reedcons.com
-    url: http://www.reedcons.com
+    email: contact@magm.com.ar
+    url: http://www.magm.com.ar
   license:
-    name: Comercial
-    url: http://www.reedcons.com/license
+    name: LGPL
+    url: http://www.gnu.org/licenses/lgpl-3.0.html
 host: localhost:8080
-basePath: /ProfitFosterWeb/api/product
+basePath: /Web/api/v1/product
 schemes:
   - http
 consumes:
@@ -45,7 +45,7 @@ paths:
           schema:
             $ref: '#/definitions/errorModel'
     put:
-      description: Modifica nuevo producto
+      description: Actualiza un producto
       operationId: update
       consumes:
         - application/json
@@ -63,6 +63,10 @@ paths:
           description: producto
           schema:
             $ref: '#/definitions/product'
+        '404':
+          description: producto no encontrado
+          schema:
+            $ref: '#/definitions/errorModel'
         default:
           description: unexpected error
           schema:
@@ -81,6 +85,10 @@ paths:
       responses:
         '200':
           description: producto eliminado
+        '404':
+          description: producto no encontrado
+          schema:
+            $ref: '#/definitions/errorModel'
         default:
           description: unexpected error
           schema:
@@ -102,6 +110,10 @@ paths:
           description: producto
           schema:
             $ref: '#/definitions/product'
+        '404':
+          description: producto no encontrado
+          schema:
+            $ref: '#/definitions/errorModel'
         default:
           description: unexpected error
           schema:

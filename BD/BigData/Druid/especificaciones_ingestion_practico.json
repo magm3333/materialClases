@@ -1,0 +1,58 @@
+{
+  "type": "index",
+  "spec": {
+    "dataSchema": {
+      "dataSource": "practico",
+      "parser": {
+        "type": "string",
+        "parseSpec": {
+          "format": "tsv",
+          "dimensionsSpec": {
+            "dimensions": [
+              "vendedor",
+              "producto",
+              "cliente",
+              {
+                "name": "importe",
+                "type": "float"
+              },
+              {
+                "name": "cantidad",
+                "type": "long"
+              }
+            ]
+          },
+          "timestampSpec": {
+            "column": "tiempo",
+            "format": "iso"
+          },
+          "hasHeaderRow": true
+        }
+      },
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "HOUR",
+        "rollup": false,
+        "queryGranularity": "none"
+      },
+      "metricsSpec": []
+    },
+    "ioConfig": {
+      "type": "index",
+      "firehose": {
+        "fetchTimeout": 300000,
+        "type": "http",
+        "uris": [
+          "http://localhost:8080/practico.tsv.gz"
+        ]
+      }
+    },
+    "tuningConfig": {
+      "type": "index",
+      "forceExtendableShardSpecs": true,
+      "maxRowsInMemory": 75000,
+      "maxParseExceptions": 100,
+      "maxSavedParseExceptions": 10
+    }
+  }
+}

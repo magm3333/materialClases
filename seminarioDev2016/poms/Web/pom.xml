@@ -20,7 +20,7 @@
 		<log4j.version>2.2</log4j.version>
 		<spring.version>4.2.5.RELEASE</spring.version>
 		<hibernate.version>4.3.8.Final</hibernate.version>
-		<jackson.version>2.5.5</jackson.version>
+		<jackson.version>2.9.10.8</jackson.version>
 		<junit.version>4.11</junit.version>
 	</properties>
 
